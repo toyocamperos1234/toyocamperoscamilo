@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> TOYOCAMPEROS 4X4 </title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #050a06; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <script>
+        // Tu enlace original del sistema de Google
+        const scriptUrl = "https://script.google.com/macros/s/AKfycby2sFw2mOMBu2nNSwDiJ4Ns2SC8xtkq19uZw-3oyYv243xjweWvbQ-0IXK6AIGaLZI/exec";
+        
+        // Leemos lo que el cliente escribió (ej: /boleta/0045)
+        const path = window.location.pathname;
+        let finalUrl = scriptUrl;
+        
+        // Magia: Detectar si están buscando una boleta
+        if (path.includes("/boleta/")) {
+            const parts = path.split("/boleta/");
+            if(parts.length > 1) {
+                const numero = parts[1].replace(/[^0-9]/g, ''); // Saca solo los números
+                if (numero) finalUrl += "?boleto=" + numero;
+            }
+        } 
+        // Detectar si están buscando el catálogo público
+        else if (path.includes("/catalogo")) {
+            finalUrl += "?v=cliente";
+        }
+
+        // Crear el marco invisible que carga tu sistema
+        const iframe = document.createElement('iframe');
+        iframe.src = finalUrl;
+        document.body.appendChild(iframe);
+    </script>
+</body>
+</html>
